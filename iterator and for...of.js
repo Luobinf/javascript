@@ -126,7 +126,7 @@ for(let value of obj2) {
 
 //8.调用Iterator接口的场合
 //扩展运算符 解构赋值 for...of循环 Set Map等等
-
+//例如:
 function fn() {
     for(let j in arguments) {
         console.log(j) //0 1 2 3
