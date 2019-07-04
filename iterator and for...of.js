@@ -136,3 +136,22 @@ function fn() {
     }
 }
 fn(10,30,60,90)
+
+//9.对于普通的对象，for...of循环不能使用，会报错。在这种情况下，可以用for...in循环遍历键名
+let obj3 = {
+    name: 'john',
+    age: 23,
+    address: 'zhejiang'
+}
+for(let j in obj3) {
+    console.log(j)  //name age address
+}
+// for(let j of obj3){
+//     console.log(j)  //报错 TypeError: obj3 is not iterable
+// }
+
+//可以使用Object.keys()方法先将对象的键转化成数组，再用for...of循环遍历
+
+for(let key of Object.keys(obj3)){
+    console.log(obj3[key]) //john 23 zhejiang
+}
