@@ -150,7 +150,7 @@ for(let j in obj3) {
 //     console.log(j)  //报错 TypeError: obj3 is not iterable
 // }
 
-//可以使用Object.keys()方法先将对象的键转化成数组，再用for...of循环遍历
+//可以先用Object.keys()方法先将对象的键转化成数组，再用for...of循环遍历
 
 for(let key of Object.keys(obj3)){
     console.log(obj3[key]) //john 23 zhejiang
