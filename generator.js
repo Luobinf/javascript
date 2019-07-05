@@ -22,3 +22,47 @@ console.log(ge.next()) //{value: "hi", done: true}
 //三.如果没有再遇到新的yield语句，就一直运行到函数结束，直到遇到return语句为止，并将return语句后买你的值作为返回对象
 //的value属性的值。
 //四.若没有遇到return语句，那么返回对象的value属性值就为undefined，此后再调用next方法时，value属性值还是undefined。
+
+//注意：generator函数里面只能执行一条return语句，但是可以执行多条yield语句，也就是可以返回一系列的值，或者说可以产生
+//多种状态，因为可以有任意多条yield语句。
+
+//2.yield语句不能用在普通函数里面，否则会报错。
+// function fn() {
+//     yield 1
+// }
+// fn()  //Uncaught SyntaxError: Unexpected number
+
+//3.next方法可以带参数
+//yield语句本身没有返回值，或者说yield语句的返回值为undefined。next方法可以带一个参数，该参数会被当做上一条yield语句的返回值。
+//例如：
+function* foo(x) {
+    let y = 2 * (yield (x + 1))
+    let z = yield (y / 3)
+    return (x + y + z)
+}
+
+let a = foo(5)  //这里返回一个迭代器对象
+console.log(a.next())  //{value: 6, done: false}
+console.log(a.next())  //{value: NaN, done: false}
+console.log(a.next())  //{value: NaN, done: false}
+//为什么上述结果为出现NaN呢？
+//之前已经说过，value属性的值时yield语句后面表达式的值，当第一次调用next方法时，由于x为5，此时yield后面的值为6
+//故返回对象的值为6。当第二次调用next方法时，返回y/3的值，由于此时next没有传入参数，那么上一次的yield语句就会返
+//回undefiend，y = 2 * undefined,此时y就为NaN，NaN/3的结果还是NaN，故第二次返回对象的value属性值为NaN。当第
+//三次调用next方法时，由于没有传入参数，那上一条yield语句的返回值就是undefined，此时z就为undefined，此时x + y + z
+//的值为 5 + NaN + undefined即为NaN，故第三次调用next方法时，其返回对象的value属性值还是NaN。
+
+function* fn(x) {
+    let y = 2 * (yield (x + 1))
+    let z = yield (y / 3)
+    return (x + y + z)
+}
+let b = foo(5)  //这里返回一个迭代器对象
+console.log(b.next())  //{value: 6, done: false}
+console.log(b.next(9))  //{value: 6, done: false}
+console.log(b.next(10))  //{value: 33, done: true}
+//上述结果分析如下：
+
+
+
+
