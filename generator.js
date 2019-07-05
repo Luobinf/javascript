@@ -62,7 +62,24 @@ console.log(b.next())  //{value: 6, done: false}
 console.log(b.next(9))  //{value: 6, done: false}
 console.log(b.next(10))  //{value: 33, done: true}
 //上述结果分析如下：
+//第一次调用next方法时，返回第一条yield语句后面表达式的值为6.第二次调用next时，由于传入了参数为9，那么该参数的值就为上一条
+//yield语句的返回值，为9，所以有y = 2 * 9，y为18,那么第二条yield语句的值就为y/3=18/3=6，故第二次调用next方法时返回对象的
+//value属性值为6.第三次调用next方法时传入参数为10，故上一次yield语句的返回值就为10，那么z就等于10，此时x + y + z表达式的
+//值就为5 + 18 + 10等于33.
 
+//4.Generator.prototype.throw()
+function* f3() {
+    yield 10
+    throw new Error('我错了')
+}
 
+let fn3 = f3()
+try{
+    console.log(fn3.next())
+    console.log(fn3.next())
+} catch(e) {
+    console.log('捕获错误', e)
+}
 
+//4.Generator.prototype.return()
 
